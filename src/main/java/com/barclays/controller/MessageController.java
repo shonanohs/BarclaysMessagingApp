@@ -22,7 +22,7 @@ public class MessageController {
     }
 
     @GetMapping("/messages/{id}")
-    public Message getMessage(@PathVariable int id, @RequestParam(value = "filter", required = false) String filter) {
+    public Message getMessage(@PathVariable int id) {
         Message message = new Message();
         message.setContent("Spring is cool " + id);
         return message;

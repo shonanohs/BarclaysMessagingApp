@@ -25,9 +25,8 @@ public class MessageControllerTests {
     public void testGetMessage() {
         int id = 1;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Message> response =
-                restTemplate.getForEntity("http://localhost:8080/messages/" + id, Message.class);
-        Message message = response.getBody();
+        Message message =
+                restTemplate.getForObject("http://localhost:8080/messages/" + id, Message.class);
         assertEquals(message.getContent(), "Spring is cool " + id);
     }
 }

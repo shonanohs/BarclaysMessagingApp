@@ -23,9 +23,8 @@ public class PersonControllerTests {
     public void testGetPerson() {
         int id = 1;
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Person> response =
-                restTemplate.getForEntity("http://localhost:8080/people/" + id, Person.class);
-        Person person = response.getBody();
+        Person person =
+                restTemplate.getForObject("http://localhost:8080/people/" + id, Person.class);
         assertEquals(person.getName(), "Shona " + id);
     }
 }
