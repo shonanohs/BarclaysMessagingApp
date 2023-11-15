@@ -1,6 +1,7 @@
 package com.barclays.service;
 
 import com.barclays.model.Message;
+import com.barclays.repository.MessageRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,13 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 public class MessageServiceImpl implements MessageService {
+    private MessageRepository messageRepository;
 
     @Override
     public List<Message> findAll() {
         List<Message> messages = new ArrayList<>();
-        Message message = new Message();
-        message.setContent("Spring is cool");
-        messages.add(message);
+        Iterable<Message> messagesIts = messageRepository.findAll();
+        messagesIts.forEach(messages::add);
         return messages;
     }
 
