@@ -16,7 +16,7 @@ public class PersonControllerTests {
         ResponseEntity<Person[]> response =
                 restTemplate.getForEntity("http://localhost:8080/people", Person[].class);
         Person[] people = response.getBody();
-        assertEquals(people.length, 1);
+        assertEquals(people.length, 8);
     }
 
     @Test

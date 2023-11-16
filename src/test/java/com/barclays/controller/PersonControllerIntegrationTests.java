@@ -1,6 +1,5 @@
 package com.barclays.controller;
 
-import com.barclays.model.Message;
 import com.barclays.model.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class PersonControllerIntegrationTests {
     @Test
     public void testGetPeople() {
         List<Person> people = personController.getPeople();
-        assertEquals(1, people.size());
+        assertEquals(4, people.size());
     }
 
     @Test

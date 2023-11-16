@@ -18,7 +18,8 @@ public class MessageControllerIntegrationTests {
     @Test
     public void testGetAllMessages() {
         List<Message> messages = messageController.getAllMessages();
-        assertEquals(1, messages.size());
+        assertEquals(4, messages.size()); // These only recognise the ones populated by the populator
+        // not in the data.sql file - can use event listener instead
     }
 
     @Test
