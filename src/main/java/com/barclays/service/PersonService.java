@@ -7,4 +7,5 @@ import java.util.List;
 public interface PersonService {
     List<Person> findAll();
     Person findById(int id);
+    List<Person> findByNameNotContains(String filter);
 }

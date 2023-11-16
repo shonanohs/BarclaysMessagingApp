@@ -1,5 +1,6 @@
 package com.barclays.service;
 
+import com.barclays.model.Message;
 import com.barclays.model.Person;
 import com.barclays.repository.PersonRepository;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,8 +26,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person findById(int id) {
-        Person person = new Person();
-        person.setName("Shona " + id);
-        return person;
+        Optional<Person> person = personRepository.findById(id);
+        return person.orElseGet(() -> new Person("No person with id " + id));
+    }
+
+    @Override
+    public List<Person> findByNameNotContains(String filter) {
+        return personRepository.findByNameNotContains(filter);
     }
 }

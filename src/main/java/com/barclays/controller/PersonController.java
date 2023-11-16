@@ -2,12 +2,14 @@ package com.barclays.controller;
 
 import com.barclays.model.Person;
 import com.barclays.service.PersonService;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -17,8 +19,15 @@ public class PersonController {
     private final PersonService personService;
 
     @GetMapping("/people")
-    public List<Person> getPeople() {
-      return personService.findAll();
+    public List<Person> getPeople(@PathParam("filter") String filter) {
+        List<Person> people = Collections.emptyList();
+        if(StringUtils.isNotBlank(filter)) {
+            people = personService.findByNameNotContains(filter);
+        }
+        else {
+            people = personService.findAll();
+        }
+        return people;
     }
 
     @GetMapping("/people/{id}")

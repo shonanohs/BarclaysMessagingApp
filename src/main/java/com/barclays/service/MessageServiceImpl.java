@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -23,9 +24,14 @@ public class MessageServiceImpl implements MessageService {
         return messages;
     }
 
+    @Override
     public Message findById(int id) {
-        Message message = new Message();
-        message.setContent("Spring is cool " + id);
-        return message;
+        Optional<Message> message = messageRepository.findById(id);
+        return message.orElseGet(() -> new Message("Default message: nothing found"));
+    }
+
+    @Override
+    public List<Message> findByContentContains(String filter) {
+        return messageRepository.findByContentContains(filter);
     }
 }

@@ -16,15 +16,24 @@ public class PersonControllerTests {
         ResponseEntity<Person[]> response =
                 restTemplate.getForEntity("http://localhost:8080/people", Person[].class);
         Person[] people = response.getBody();
-        assertEquals(people.length, 8);
+        assertEquals(people.length, 4);
     }
 
     @Test
     public void testGetPerson() {
+        int id = 100;
+        RestTemplate restTemplate = new RestTemplate();
+        Person person =
+                restTemplate.getForObject("http://localhost:8080/people/" + id, Person.class);
+        assertEquals(person.getName(), "first person");
+    }
+
+    @Test
+    public void testGetInvalidPerson() {
         int id = 1;
         RestTemplate restTemplate = new RestTemplate();
         Person person =
                 restTemplate.getForObject("http://localhost:8080/people/" + id, Person.class);
-        assertEquals(person.getName(), "Shona " + id);
+        assertEquals(person.getName(), "No person with id " + id);
     }
 }

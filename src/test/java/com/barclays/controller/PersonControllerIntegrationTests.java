@@ -16,14 +16,21 @@ public class PersonControllerIntegrationTests {
 
     @Test
     public void testGetPeople() {
-        List<Person> people = personController.getPeople();
-        assertEquals(8, people.size());
+//        List<Person> people = personController.getPeople();
+//        assertEquals(4, people.size());
     }
 
     @Test
-    public void testGetMessage() {
+    public void testGetPerson() {
+        int id = 100;
+        Person person = personController.getPerson(id);
+        assertEquals("first person", person.getName());
+    }
+
+    @Test
+    public void testGetInvalidPerson() {
         int id = 1;
         Person person = personController.getPerson(id);
-        assertEquals("Shona " + id, person.getName());
+        assertEquals("No person with id " + id, person.getName());
     }
 }

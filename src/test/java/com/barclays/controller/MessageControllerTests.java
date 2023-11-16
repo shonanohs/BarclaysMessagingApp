@@ -18,15 +18,24 @@ public class MessageControllerTests {
         ResponseEntity<Message[]> response =
                 restTemplate.getForEntity("http://localhost:8080/messages", Message[].class);
         Message[] messages = response.getBody();
-        assertEquals(messages.length, 8);
+        assertEquals(messages.length, 4);
     }
 
     @Test
     public void testGetMessage() {
+        int id = 100;
+        RestTemplate restTemplate = new RestTemplate();
+        Message message =
+                restTemplate.getForObject("http://localhost:8080/messages/" + id, Message.class);
+        assertEquals(message.getContent(), "first message");
+    }
+
+    @Test
+    public void testGetInvalidMessage() {
         int id = 1;
         RestTemplate restTemplate = new RestTemplate();
         Message message =
                 restTemplate.getForObject("http://localhost:8080/messages/" + id, Message.class);
-        assertEquals(message.getContent(), "Spring is cool " + id);
+        assertEquals(message.getContent(), "Default message: nothing found");
     }
 }
