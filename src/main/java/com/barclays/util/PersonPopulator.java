@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class PersonPopulator {
     private PersonRepository personRepository;
 
-   // @EventListener(ContextRefreshedEvent.class) - don't have to call populate in main if using this
+   @EventListener(ContextRefreshedEvent.class) // don't have to call populate in main if using this
     public void populate() {
         Person p1 = new Person("Person 1");
         personRepository.save(p1);

@@ -32,7 +32,7 @@ public class PersonTestsWithMockHttpRequest {
 
     @Test
     public void testGettingAllPeople() throws Exception {
-        int expectedLength = 4;
+        int expectedLength = 8;
 
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/people")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -46,10 +46,14 @@ public class PersonTestsWithMockHttpRequest {
 
         assertAll("Testing from a test-data.sql file",
                 () -> assertEquals(expectedLength, people.length),
-                () -> assertEquals("first person", people[0].getName()),
-                () -> assertEquals("second person", people[1].getName()),
-                () -> assertEquals("third person", people[2].getName()),
-                () -> assertEquals("fourth person", people[3].getName())
+                () -> assertEquals("Person 1", people[0].getName()),
+                () -> assertEquals("Person 2", people[1].getName()),
+                () -> assertEquals("Person 3", people[2].getName()),
+                () -> assertEquals("Person 4", people[3].getName()),
+                () -> assertEquals("first person", people[4].getName()),
+                () -> assertEquals("second person", people[5].getName()),
+                () -> assertEquals("third person", people[6].getName()),
+                () -> assertEquals("fourth person", people[7].getName())
         );
     }
 }

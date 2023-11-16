@@ -32,7 +32,7 @@ public class MessageTestsWithMockHttpRequest {
 
     @Test
     public void testGettingAllMessages() throws Exception {
-        int expectedLength = 4;
+        int expectedLength = 8;
 
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/messages")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -46,10 +46,14 @@ public class MessageTestsWithMockHttpRequest {
 
         assertAll("Testing from a test-data.sql file",
                 () -> assertEquals(expectedLength, messages.length),
-                () -> assertEquals("first message", messages[0].getContent()),
-                () -> assertEquals("second message", messages[1].getContent()),
-                () -> assertEquals("third message", messages[2].getContent()),
-                () -> assertEquals("fourth message", messages[3].getContent())
+                () -> assertEquals("Message 1", messages[0].getContent()),
+                () -> assertEquals("Message 2", messages[1].getContent()),
+                () -> assertEquals("Message 3", messages[2].getContent()),
+                () -> assertEquals("Message 4", messages[3].getContent()),
+                () -> assertEquals("first message", messages[4].getContent()),
+                () -> assertEquals("second message", messages[5].getContent()),
+                () -> assertEquals("third message", messages[6].getContent()),
+                () -> assertEquals("fourth message", messages[7].getContent())
                 );
     }
 }

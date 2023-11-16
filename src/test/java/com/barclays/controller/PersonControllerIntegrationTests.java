@@ -17,7 +17,7 @@ public class PersonControllerIntegrationTests {
     @Test
     public void testGetPeople() {
         List<Person> people = personController.getPeople();
-        assertEquals(4, people.size());
+        assertEquals(8, people.size());
     }
 
     @Test

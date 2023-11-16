@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class MessagePopulator {
     private MessageRepository messageRepository;
 
-   // @EventListener(ContextRefreshedEvent.class)
+   @EventListener(ContextRefreshedEvent.class)
     public void populate() {
         Message m1 = new Message("Message 1");
         messageRepository.save(m1);
