@@ -1,6 +1,5 @@
 package com.barclays.service;
 
-import com.barclays.model.Message;
 import com.barclays.model.Person;
 import com.barclays.repository.PersonRepository;
 import lombok.AllArgsConstructor;
@@ -31,7 +30,17 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public List<Person> findByNameContains(String filter) {
+        return personRepository.findByNameContains(filter);
+    }
+
+    @Override
     public List<Person> findByNameNotContains(String filter) {
         return personRepository.findByNameNotContains(filter);
+    }
+
+    @Override
+    public List<Person> searchByName(String name) {
+        return personRepository.searchByName(name);
     }
 }

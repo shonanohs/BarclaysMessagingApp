@@ -17,8 +17,8 @@ public class MessageControllerIntegrationTests {
 
     @Test
     public void testGetAllMessages() {
-//        List<Message> messages = messageController.getAllMessages();
-//        assertEquals(4, messages.size());
+        List<Message> messages = messageController.getAllMessages("");
+        assertEquals(4, messages.size());
     }
 
     @Test

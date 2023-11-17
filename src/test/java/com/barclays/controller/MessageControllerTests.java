@@ -1,7 +1,6 @@
 package com.barclays.controller;
 
 import com.barclays.model.Message;
-import com.barclays.model.Person;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
