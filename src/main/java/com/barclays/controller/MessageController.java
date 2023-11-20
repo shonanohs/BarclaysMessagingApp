@@ -5,9 +5,7 @@ import com.barclays.service.MessageService;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,5 +30,10 @@ public class MessageController {
     @GetMapping("/messages/{id}")
     public Message getMessage(@PathVariable int id) {
         return messageService.findById(id);
+    }
+
+    @PostMapping("/message")
+    public Message createMessage(@RequestBody Message message) {
+        return messageService.save(message);
     }
 }

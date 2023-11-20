@@ -34,4 +34,9 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> findByContentContains(String filter) {
         return messageRepository.findByContentContains(filter);
     }
+
+    @Override
+    public Message save(Message message) {
+        return messageRepository.save(message);
+    }
 }
