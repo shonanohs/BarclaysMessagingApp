@@ -1,5 +1,6 @@
 package com.barclays.controller;
 
+import com.barclays.model.Address;
 import com.barclays.model.Person;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -28,11 +29,12 @@ public class PersonTestsWithMockHttpRequest {
 
     @Autowired
     MockMvc mockMvc;
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper;
+    ResultActions resultActions;
 
     @Test
     public void testGettingAllPeople() throws Exception {
-        int expectedLength = 8;
+        int expectedLength = 4;
 
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/people")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -45,10 +47,41 @@ public class PersonTestsWithMockHttpRequest {
         Person[] people = mapper.readValue(contentAsString, Person[].class);
 
         assertAll("Testing from a test-data.sql file",
+                () -> assertEquals(expectedLength, people.length),
                 () -> assertEquals("first person", people[0].getName()),
                 () -> assertEquals("second person", people[1].getName()),
                 () -> assertEquals("third person", people[2].getName()),
                 () -> assertEquals("fourth person", people[3].getName())
         );
+    }
+
+    @Test
+    public void testCreatePerson() throws Exception {
+        Person person = new Person();
+        person.setName("Shona");
+
+        Address address = new Address();
+        address.setLineOne("Line One");
+        address.setLineTwo("Line Two");
+        address.setState("State");
+        address.setPostalCode("Postcode");
+        address.setCountry("Country");
+
+        person.setAddress(address);
+
+        mapper = new ObjectMapper();
+
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/person")
+                        .content(mapper.writeValueAsString(person))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        person = mapper.readValue(contentAsString, Person.class);
+
+        assertEquals(1, person.getId());
     }
 }

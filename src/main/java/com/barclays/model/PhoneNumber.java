@@ -13,7 +13,6 @@ public class PhoneNumber {
     @Id
     @GeneratedValue
     private Integer id;
-
     private String countryCode;
     private String number;
 }

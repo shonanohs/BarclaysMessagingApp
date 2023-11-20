@@ -28,7 +28,8 @@ public class MessageTestsWithMockHttpRequest {
 
     @Autowired
     MockMvc mockMvc;
-    ObjectMapper mapper = new ObjectMapper();
+    ObjectMapper mapper;
+    ResultActions resultActions;
 
     @Test
     public void testGettingAllMessages() throws Exception {
@@ -45,10 +46,31 @@ public class MessageTestsWithMockHttpRequest {
         Message[] messages = mapper.readValue(contentAsString, Message[].class);
 
         assertAll("Testing from a test-data.sql file",
+                () -> assertEquals(expectedLength, messages.length),
                 () -> assertEquals("first message", messages[0].getContent()),
                 () -> assertEquals("second message", messages[1].getContent()),
                 () -> assertEquals("third message", messages[2].getContent()),
                 () -> assertEquals("fourth message", messages[3].getContent())
                 );
+    }
+
+    @Test
+    public void testCreateMessage() throws Exception {
+        Message message = new Message("test message");
+
+        mapper = new ObjectMapper();
+
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/message")
+                        .content(mapper.writeValueAsString(message))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        message = mapper.readValue(contentAsString, Message.class);
+
+        assertEquals(1, message.getId());
     }
 }
