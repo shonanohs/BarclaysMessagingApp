@@ -3,6 +3,7 @@ package com.barclays.model;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,21 +13,14 @@ public class Person {
     @GeneratedValue
     private Integer id;
     private String name;
-    @OneToOne(cascade = CascadeType.PERSIST) // Save address and person
+    @OneToOne(cascade = CascadeType.ALL) // Save address and person
     private Address address;
-    @OneToMany(cascade = CascadeType.PERSIST)
-    private List<PhoneNumber> phoneNumbers;
+    @OneToMany(mappedBy = "sender")
+    private List<Message> sentMessages;
 
     public Person (String name) {
         this.name = name;
-    }
-
-    public List<PhoneNumber> getPhoneNumbers() {
-        return phoneNumbers;
-    }
-
-    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
+        sentMessages = new ArrayList<>();
     }
 
     public Address getAddress() {

@@ -48,4 +48,9 @@ public class PersonServiceImpl implements PersonService {
     public Person save(Person person) {
         return personRepository.save(person);
     }
+
+    @Override
+    public void deleteById(int id) {
+        personRepository.deleteById(id);
+    }
 }

@@ -1,6 +1,7 @@
 package com.barclays.controller;
 
 import com.barclays.model.Message;
+import com.barclays.model.Person;
 import com.barclays.service.MessageService;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
@@ -32,8 +33,19 @@ public class MessageController {
         return messageService.findById(id);
     }
 
-    @PostMapping("/message")
+    @PostMapping("/messages")
     public Message createMessage(@RequestBody Message message) {
         return messageService.save(message);
     }
+
+    @PutMapping("/messages")
+    public Message updateMessage (@RequestBody Message message) {
+        return messageService.save(message);
+    }
+
+    @DeleteMapping("/messages/{id}")
+    public void deleteMessage (@PathVariable int id) {
+        messageService.deleteById(id);
+    }
+
 }

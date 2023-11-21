@@ -17,8 +17,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Sql("classpath:test-data.sql")
 @SpringBootTest
@@ -36,10 +35,12 @@ public class PersonTestsWithMockHttpRequest {
     public void testGettingAllPeople() throws Exception {
         int expectedLength = 4;
 
+        mapper = new ObjectMapper();
+
         ResultActions resultActions = this.mockMvc.perform(MockMvcRequestBuilders.get("/people")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                        .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
@@ -71,11 +72,11 @@ public class PersonTestsWithMockHttpRequest {
 
         mapper = new ObjectMapper();
 
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/person")
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/people")
                         .content(mapper.writeValueAsString(person))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                        .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
@@ -83,5 +84,20 @@ public class PersonTestsWithMockHttpRequest {
         person = mapper.readValue(contentAsString, Person.class);
 
         assertEquals(1, person.getId());
+    }
+
+    @Test
+    public void testDeletePerson() throws Exception {
+        int id = 200;
+
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/people/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        assertEquals("", contentAsString);
     }
 }

@@ -11,4 +11,5 @@ public interface PersonService {
     List<Person> findByNameNotContains(String filter);
     List<Person> searchByName(String name);
     Person save(Person person);
+    void deleteById(int id);
 }

@@ -42,7 +42,6 @@ public class PersonPopulator {
 
         phoneNumbers.add(phoneNumber1);
         phoneNumbers.add(phoneNumber2);
-        person.setPhoneNumbers(phoneNumbers);
 
         personRepository.save(person);
     }

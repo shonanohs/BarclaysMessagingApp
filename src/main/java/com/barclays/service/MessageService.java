@@ -9,4 +9,5 @@ public interface MessageService {
     Message findById(int id);
     List<Message> findByContentContains(String filter);
     Message save(Message message);
+    void deleteById(int id);
 }

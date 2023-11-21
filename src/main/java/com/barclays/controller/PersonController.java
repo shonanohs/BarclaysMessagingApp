@@ -36,12 +36,22 @@ public class PersonController {
        return personService.findById(id);
     }
 
-    @PostMapping("/person")
+    @PostMapping("/people")
     public Person createPerson (@RequestBody Person person) {
         return personService.save(person);
     }
 
-    @GetMapping("/person/search")
+    @PutMapping("/people")
+    public Person updatePerson (@RequestBody Person person) {
+        return personService.save(person);
+    }
+
+    @DeleteMapping("/people/{id}")
+    public void deletePerson (@PathVariable int id) {
+        personService.deleteById(id);
+    }
+
+    @GetMapping("/people/search")
     public List<Person> searchByName(@PathParam("name") String name) {
         return personService.searchByName(name);
     }

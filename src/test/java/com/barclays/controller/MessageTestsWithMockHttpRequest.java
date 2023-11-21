@@ -60,11 +60,11 @@ public class MessageTestsWithMockHttpRequest {
 
         mapper = new ObjectMapper();
 
-        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/message")
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.post("/messages")
                         .content(mapper.writeValueAsString(message))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                        .andExpect(MockMvcResultMatchers.status().isOk());
 
         MvcResult result = resultActions.andReturn();
         String contentAsString = result.getResponse().getContentAsString();
@@ -72,5 +72,20 @@ public class MessageTestsWithMockHttpRequest {
         message = mapper.readValue(contentAsString, Message.class);
 
         assertEquals(1, message.getId());
+    }
+
+    @Test
+    public void testDeleteMessage() throws Exception {
+        int id = 200;
+
+        resultActions = this.mockMvc.perform(MockMvcRequestBuilders.delete("/messages/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isOk());
+
+        MvcResult result = resultActions.andReturn();
+        String contentAsString = result.getResponse().getContentAsString();
+
+        assertEquals("", contentAsString);
     }
 }

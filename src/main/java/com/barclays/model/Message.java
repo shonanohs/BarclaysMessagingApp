@@ -3,6 +3,7 @@ package com.barclays.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -12,6 +13,9 @@ public class Message {
     @GeneratedValue
     private Integer id;
     private String content;
+
+    @ManyToOne
+    private Person sender;
 
     public Message(String content) {
         this.content = content;
